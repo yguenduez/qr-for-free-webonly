@@ -1,0 +1,11 @@
+[tasks.frontend-dev]
+install_crate = "dioxus-cli"
+command = "dx"
+args = ["serve", "--bin", "frontend", "--hot-reload"]
+
+[tasks.tailwind-dev]
+command = "npx"
+args = ["tailwindcss", "-i",  "./frontend/input.css", "-o", "./frontend/public/tailwind.css"]
+
+[tasks.dev]
+run_task = { name = ["tailwind-dev", "frontend-dev"], parallel = true}
