@@ -34,7 +34,7 @@ fn App(cx: Scope) -> Element {
                         class: "input input-bordered w-full m-8",
                         placeholder: "Your URL",
                         oninput: move |evt| text.set(evt.value.clone()),
-                        onkeydown: move |evt| { if evt.key() == Key::Enter {
+                        onkeydown: move |evt| { if evt.key() == Key::Enter || evt.key() == Key::Accept {
                             query_url.set(qr_url(text.get()));
                         }}
                     }
