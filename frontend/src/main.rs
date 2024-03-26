@@ -29,20 +29,35 @@ fn App(cx: Scope) -> Element {
             div {
                 class: "flex justify-center items-center h-full",
                 div {
-                    class: "flex items-center rounded-3xl shadow-md",
-                    input {
-                        class: "input input-bordered w-full m-8",
-                        placeholder: "Your URL",
-                        oninput: move |evt| text.set(evt.value.clone()),
-                        onkeydown: move |evt| { if evt.key() == Key::Enter || evt.key() == Key::Accept {
-                            query_url.set(qr_url(text.get()));
-                        }}
+                    div {
+                        class: "flex items-center justify-center w-full",
+                        img {
+                            class: "rounded-3xl m-8",
+                            src: "{query_url}"
+                        }
                     }
                     div {
-                        class: "flex items-center justify-center w-full m-8",
-                        img {
-                            class: "rounded-3xl",
-                            src: "{query_url}"
+                        div {
+                            class: "flex items-center justify-center",
+                            input {
+                                class: "input input-bordered w-full m-8",
+                                placeholder: "Your URL",
+                                oninput: move |evt| text.set(evt.value.clone()),
+                                onkeydown: move |evt| { if evt.key() == Key::Enter || evt.key() == Key::Accept {
+                                    query_url.set(qr_url(text.get()));
+                                }}
+                            }
+                        }
+                        div {
+                            class: "flex items-center justify-center",
+                            button {
+                                class: "btn btn-primary m-8 p-4",
+                                onclick: move |_| {query_url.set(qr_url(text.get()))},
+                                p {
+                                    class: "text-xl justify-center",
+                                    "Generate"
+                                }
+                            }
                         }
                     }
                 }
