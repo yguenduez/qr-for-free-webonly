@@ -2,21 +2,21 @@
 use std::io::{BufWriter, Cursor};
 
 // import the prelude to get access to the `rsx!` macro and the `Element` type
-use dioxus::{html::input_data::keyboard_types::Key, prelude::*};
+use dioxus::prelude::*;
 use image::{ImageFormat, Luma};
 use qrcode::QrCode;
 use url::Url;
 
 fn main() {
-    dioxus_web::launch(App);
+    launch(App);
 }
 
-fn App(cx: Scope) -> Element {
+fn App() -> Element {
     const ENTRY_VALUE: &str = "https://example.com";
-    let text = use_state(cx, || ENTRY_VALUE.to_string());
-    let query_url = use_state(cx, || qr_url(ENTRY_VALUE));
+    let mut text = use_signal(|| ENTRY_VALUE.to_string());
+    let mut query_url = use_signal(|| qr_url(ENTRY_VALUE));
 
-    cx.render(rsx! {
+    rsx! {
         div {
             class: "bg-base-500",
             div{
@@ -42,9 +42,9 @@ fn App(cx: Scope) -> Element {
                             input {
                                 class: "input input-bordered w-full m-8",
                                 placeholder: "Your URL",
-                                oninput: move |evt| text.set(evt.value.clone()),
+                                oninput: move |evt| text.set(evt.value().clone()),
                                 onkeydown: move |evt| { if evt.key() == Key::Enter || evt.key() == Key::Accept {
-                                    query_url.set(qr_url(text.get()));
+                                    query_url.set(qr_url(&text.read()));
                                 }}
                             }
                         }
@@ -52,7 +52,7 @@ fn App(cx: Scope) -> Element {
                             class: "flex items-center justify-center",
                             button {
                                 class: "btn btn-primary m-8 p-4",
-                                onclick: move |_| {query_url.set(qr_url(text.get()))},
+                                onclick: move |_| {query_url.set(qr_url(&text.read()))},
                                 p {
                                     class: "text-xl justify-center",
                                     "Generate"
@@ -63,7 +63,7 @@ fn App(cx: Scope) -> Element {
                 }
             }
         }
-    })
+    }
 }
 
 use base64::prelude::*;
