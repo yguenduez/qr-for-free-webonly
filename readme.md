@@ -40,4 +40,8 @@ app with
 This should serve the app at `localhost:8080`, which you can open with the browser of your choice!
 
 
-Have fun
+# Want to see it live?
+
+Have a look here: [qr4free.yguenduez.dev](https://qr4free.yguenduez.dev/)
+
+Have fun rusting around :)
