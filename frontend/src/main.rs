@@ -54,7 +54,7 @@ fn App() -> Element {
                                 class: "btn btn-primary m-8 p-4",
                                 onclick: move |_| {query_url.set(qr_url(&text.read()))},
                                 p {
-                                    class: "text-xl justify-center",
+                                    class: "justify-center",
                                     "Generate"
                                 }
                             }
